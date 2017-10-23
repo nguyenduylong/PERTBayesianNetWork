@@ -1,0 +1,209 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package GUI;
+
+import Bayes.CriticalPath;
+import Bayes.Task;
+import com.sun.java.accessibility.util.AWTEventMonitor;
+import com.sun.java.swing.plaf.motif.MotifTextUI;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+/**
+ *
+ * @author Truong
+ */
+//class show mang bayesian
+public class PanelTask extends JPanel {
+
+    ArrayList<ActivityLayout> list = new ArrayList<>();
+    ArrayList<Task> listTask;
+    Task startTask;
+    ArrayList<Task> finishTask = new ArrayList<>();
+    Point poit1;
+    Point poit2;
+    JButton startBtn , finishBtn;
+    
+    public PanelTask(ArrayList<Task> listTask) {
+        setLayout(null);
+        this.listTask = listTask;
+        
+        for (int i = 0; i < listTask.size(); i++) {
+            ArrayList<Task> listTruyen = new ArrayList<>();
+//            System.out.println("list task :+"+listTask.get(i).name
+//            +" : "+ listTask2.get(i).name +":"+listTask1.get(i));
+            listTruyen.add(listTask.get(i));
+            ActivityLayout a = new ActivityLayout(listTask.get(i).name, listTruyen);
+
+           // System.out.println("size là :" + a.getListTask().size());
+            a.setLocation(i * 150, i*20);
+            a.setSize(250, 150);
+            //System.out.println("tọa độ :" + a.getButton2().getX());
+            a.addMouseMotionListener(new MouseMotionListener() {
+                @Override
+                public void mouseDragged(MouseEvent me) {
+                    a.setLocation(a.getX() + me.getX(), a.getY() + me.getY());
+                    repaint();
+
+                }
+
+                @Override
+                public void mouseMoved(MouseEvent me) {
+
+                }
+            });
+            list.add(a);
+        }
+        for (int i = 0; i < list.size(); i++) {
+            this.add(list.get(i));
+        }
+        startBtn = new JButton("start");
+        System.out.println(this.getY() + "x" + this.getX());
+        Point point1 = new Point(0,250);
+        startBtn.setSize(100, 100);
+        startBtn.setLocation(point1);
+        finishBtn = new JButton("finish");
+        Point point2 = new Point(1200,250);
+        finishBtn.setLocation(point2);
+        finishBtn.setSize(100, 100);
+     
+        this.add(startBtn);
+        this.add(finishBtn);
+        startBtn.addActionListener(new ActionListener() {
+             @Override
+                    public void actionPerformed(ActionEvent ae) {
+                                CriticalPath cri = new CriticalPath();
+                                ArrayList<ArrayList<Double>> duLieu = new ArrayList<>();       
+                                duLieu = cri.duLieuES(startTask);
+                                JFrame fame = new JFrame();
+                                DoThi doThi = new DoThi(duLieu," start" ,0);
+                                fame.add(doThi);
+                                fame.setSize(500, 500);
+                                fame.setVisible(true);
+                    }
+        });
+        finishBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            JFrame fame = new JFrame();
+            Result1 re = new Result1(finishTask);
+            fame.add(re);
+            fame.setVisible(true);
+            fame.setSize(1500, 1000);
+            }
+        });
+
+    }
+
+    public ArrayList<ActivityLayout> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<ActivityLayout> list) {
+        this.list = list;
+    }
+
+    public ArrayList<Task> getListTask() {
+        return listTask;
+    }
+
+    public void setListTask(ArrayList<Task> listTask) {
+        this.listTask = listTask;
+    }
+
+    public Point getPoit1() {
+        return poit1;
+    }
+
+    public void setPoit1(Point poit1) {
+        this.poit1 = poit1;
+    }
+
+    public Point getPoit2() {
+        return poit2;
+    }
+
+    public void setPoit2(Point poit2) {
+        this.poit2 = poit2;
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.RED);
+        g.setFont(new Font("Tahoma", 50, 50));
+        for(int i=0;i<listTask.size();i++){
+            Task task = listTask.get(i);
+            if(task.parents.isEmpty()){
+                    g.drawLine(startBtn.getX()+90, startBtn.getY() + 75, list.get(i).getX(), list.get(i).getY()+75);
+                    g.fillRect(list.get(i).getX(), list.get(i).getY()+75, 10, 5);
+                    startTask = task;
+            }
+            if(task.getDependencies().size() == 0){
+                    g.drawLine(list.get(i).getX() + 250, list.get(i).getY()+75, finishBtn.getX(), finishBtn.getY()+75);
+                    g.fillRect(finishBtn.getX(), finishBtn.getY()+75 , 10, 5);
+                    if(!finishTask.contains(task)){
+                        finishTask.add(task);
+                    }
+                    
+            }
+        }
+        for (int i = 0; i < listTask.size(); i++) {
+            if (listTask.get(i).getDependencies().size() != 0) {
+                // System.out.println("?/");
+                Task[] li = listTask.get(i).getDependencies().toArray(new Task[0]);
+                // System.out.println("?/"+li[0].name);
+                // System.out.println("day la :"+list.get(0).tit);
+                for (int j = 0; j < li.length; j++) {
+                    for (int k = 0; k < listTask.size(); k++) {
+                        if (li[j].name.equals(list.get(k).tit)) {
+                            //  System.out.println("vao?");
+
+                            g.drawLine(list.get(i).getX() + 250, list.get(i).getY() + 150, list.get(k).getX() + 225, list.get(k).getY());
+                            g.fillRect(list.get(k).getX() + 220, list.get(k).getY() - 5, 10, 5);
+                            g.drawLine(list.get(k).getX(), list.get(k).getY(), list.get(i).getX() + 25, list.get(i).getY() + 150);
+                            g.fillRect(list.get(i).getX() + 25, list.get(i).getY() + 150, 10, 5);
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Task t1 = new Task("A");
+        Task t2 = new Task("B", t1);
+        Task t3 = new Task("C", t1);
+        Task t4 = new Task("D", t3, t2);
+        Task t5 = new Task("E", t4);
+        ArrayList<Task> list = new ArrayList<>();
+        list.add(t5);
+        list.add(t4);
+        list.add(t3);
+        list.add(t2);
+        list.add(t1);
+        PanelTask pan = new PanelTask(list);
+        JFrame fame = new JFrame();
+        fame.setSize(1500, 1000);
+        fame.add(pan);
+        fame.setVisible(true);
+        fame.setDefaultCloseOperation(fame.EXIT_ON_CLOSE);
+    }
+}
