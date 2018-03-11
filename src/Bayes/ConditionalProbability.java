@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Truong
+ * @author Long
  */
 
 //class xac suat co dk 

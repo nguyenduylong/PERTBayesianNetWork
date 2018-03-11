@@ -8,7 +8,7 @@ package Bayes;
 
 /**
  *
- * @author Truong
+ * @author Long
  */
 
 // class xác suất để lưu tên và giá trị xác suất

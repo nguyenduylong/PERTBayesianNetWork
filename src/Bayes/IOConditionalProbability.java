@@ -6,13 +6,15 @@
 package Bayes;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
 
 /**
  *
- * @author Truong
+ * @author Long
  */
 public class IOConditionalProbability {
 
@@ -47,7 +49,7 @@ public class IOConditionalProbability {
         if (task.earlyStart.parents.size() > 0) {
             ArrayList<String> result = new ArrayList<>();
             ArrayList<Double> luuXacSuat = new ArrayList<>();
-            int n = task.earlyStart.parents.size() + 1;
+            int n = task.earlyStart.parents.size()+1;
             TRY("", n, result);
             for (int i = 0; i < result.size(); i++) {
                 System.out.println(result.get(i));
@@ -80,14 +82,11 @@ public class IOConditionalProbability {
                // double giatri = input.nextDouble();
                 cha[n - 2] = task.earlyStart.parents.get(n - 2).getName() + indexs[n - 2];
                 ConditionalProbability pro = new ConditionalProbability(giatri, task.name + ".ES" + indexs[n - 1], cha);
-//                System.out.println("là :"+ pro.getParentsField().get(n-2));
-//                 System.out.println("là :"+ pro.getParentsField().get(n-3));
-                System.out.println("conditional probability : " + pro.print());
                 task.earlyStart.getListConditional().add(pro);
             }
              
         }
-    }// h t muốn nhập kiểu ntn này
+    }
 
     public void TRY(String str, int len, ArrayList<String> result) {
         if (str.length() < len) {

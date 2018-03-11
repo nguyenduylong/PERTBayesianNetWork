@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Truong
+ * @author Long
  */
 public class BayesCalculation {
 
@@ -29,15 +29,15 @@ public class BayesCalculation {
 //
             // FieldProbability[] fieProbability = new FieldProbability[2];
                 if (node.parents.size() == 0) {
-                    node.getProbability().get(chay)[0].setValue(0.95);
-                    node.getProbability().get(chay)[1].setValue(0.05);
+                    node.getProbability().get(chay)[0].setValue(1);
+                    node.getProbability().get(chay)[1].setValue(0);
                     //System.out.println(" nhan lĂ  :"+node.getName());
                 }else {
                     for (int i = 0; i < 2; i++) {
                         double value = 0;
-                        FieldProbability fie = node.getProbability().get(chay)[i];
+                        FieldProbability probability = node.getProbability().get(chay)[i];
                         for (int j = 0; j < node.getListConditional().size(); j++) {
-                            if (fie.getFieldName().equals(node.getListConditional().get(j).getFieldName())) {
+                            if (probability.getFieldName().equals(node.getListConditional().get(j).getFieldName())) {
                                 ConditionalProbability con = node.getListConditional().get(j);
                                 double value1 = con.getValue();
                                 //System.out.println(node.getListConditional().get(j).print() )
@@ -48,7 +48,6 @@ public class BayesCalculation {
 
                                             if (con.getParentsField().get(k).equals(node.parents.get(h).getProbability().get(chay)[l].getFieldName())) {
                                                 value1 = value1 * node.parents.get(h).getProbability().get(chay)[l].getValue();
-                                                //System.out.println("ở đây :"+ node.parents.get(h).getProbability().get(chay)[l].print()+":   "+node.parents.get(h).getProbability().get(chay)[l].getValue());
                                             }
                                         }
                                     }
@@ -62,6 +61,7 @@ public class BayesCalculation {
                     }
 
                 }
+                
                 chay++;
         }
 
@@ -74,17 +74,4 @@ public class BayesCalculation {
 
         }
     }
-
-//    public Node calculateDuration(Task t) {
-//        Node totalDuration = new Node(t.name + ".D");
-//        InitTotalDuration init = new InitTotalDuration(totalDuration, t.name);
-//        ArrayList<Node> listNode = new ArrayList<>();
-//       
-//    }
-//    public void calculateTask1(Task t) {
-//
-//        calculateBayes(t.earlyStart);
-//        //calculate(t.earlyFinish);
-//
-//    }
 }

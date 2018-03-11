@@ -28,7 +28,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Truong
+ * @author Long
  */
 //class show mang bayesian
 public class PanelTask extends JPanel {
@@ -54,7 +54,7 @@ public class PanelTask extends JPanel {
 
            // System.out.println("size là :" + a.getListTask().size());
             a.setLocation(i * 150, i*20);
-            a.setSize(250, 150);
+            a.setSize(200,200);
             //System.out.println("tọa độ :" + a.getButton2().getX());
             a.addMouseMotionListener(new MouseMotionListener() {
                 @Override
@@ -151,13 +151,15 @@ public class PanelTask extends JPanel {
         for(int i=0;i<listTask.size();i++){
             Task task = listTask.get(i);
             if(task.parents.isEmpty()){
-                    g.drawLine(startBtn.getX()+90, startBtn.getY() + 75, list.get(i).getX(), list.get(i).getY()+75);
-                    g.fillRect(list.get(i).getX(), list.get(i).getY()+75, 10, 5);
+                    g.drawLine(startBtn.getX()+50, startBtn.getY() + 50, list.get(i).getX(), list.get(i).getY()+100);
+                    g.drawLine(list.get(i).getX(), list.get(i).getY()+100, list.get(i).getX()-5, list.get(i).getY()+95);
+                    g.drawLine(list.get(i).getX(), list.get(i).getY()+100, list.get(i).getX()-5, list.get(i).getY()+105);
                     startTask = task;
             }
             if(task.getDependencies().size() == 0){
-                    g.drawLine(list.get(i).getX() + 250, list.get(i).getY()+75, finishBtn.getX(), finishBtn.getY()+75);
-                    g.fillRect(finishBtn.getX(), finishBtn.getY()+75 , 10, 5);
+                    g.drawLine(list.get(i).getX() + 200, list.get(i).getY()+100, finishBtn.getX(), finishBtn.getY()+50);
+                    g.drawLine(finishBtn.getX(), finishBtn.getY()+50, finishBtn.getX()-3, finishBtn.getY()+45);
+                    g.drawLine(finishBtn.getX(), finishBtn.getY()+50, finishBtn.getX()-3, finishBtn.getY()+55);
                     if(!finishTask.contains(task)){
                         finishTask.add(task);
                     }
@@ -175,11 +177,9 @@ public class PanelTask extends JPanel {
                         if (li[j].name.equals(list.get(k).tit)) {
                             //  System.out.println("vao?");
 
-                            g.drawLine(list.get(i).getX() + 250, list.get(i).getY() + 150, list.get(k).getX() + 225, list.get(k).getY());
-                            g.fillRect(list.get(k).getX() + 220, list.get(k).getY() - 5, 10, 5);
-                            g.drawLine(list.get(k).getX(), list.get(k).getY(), list.get(i).getX() + 25, list.get(i).getY() + 150);
-                            g.fillRect(list.get(i).getX() + 25, list.get(i).getY() + 150, 10, 5);
-
+                            g.drawLine(list.get(i).getX() + 100, list.get(i).getY() + 100, list.get(k).getX(), list.get(k).getY()+100);
+                            g.drawLine(list.get(k).getX(), list.get(k).getY()+100, list.get(k).getX()-5, list.get(k).getY()+105);
+                            g.drawLine(list.get(k).getX(), list.get(k).getY()+100, list.get(k).getX()-5, list.get(k).getY()+95);
                         }
                     }
                 }

@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
+        <file>
+            <url>src/GUI/PERTBayesNetwork.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>230</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/Bayes/InitTotalDuration.java</url>
+            <bookmark id="2">
+                <name/>
+                <line>75</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/GUI/PanelTask.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/GUI/Arrow.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/Bayes/FieldProbability.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/Bayes/Task.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/Bayes/BayesInActivity.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/Bayes/BayesCalculation.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/Bayes/ConditionalProbability.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/Bayes/MathForDummies.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/Bayes/InitTotalDuration.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/Bayes/CriticalPath.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/Bayes/NormalDistribution.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/GUI/PERTBayesNetwork.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/Bayes/Node.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/GUI/RotateArrow.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/GUI/DoThi.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/Bayes/IOConditionalProbability.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/GUI/BarChart_AWT.java</file>
-            <file>file:/C:/Users/long/Documents/NetBeansProjects/PERTBayes/src/GUI/LineInJpanel.java</file>
+            <file>file:/C:/Users/Long/Documents/NetBeansProjects/PERTBayesianNetWork/src/GUI/PERTBayesNetwork.java</file>
+            <file>file:/C:/Users/Long/Documents/NetBeansProjects/PERTBayesianNetWork/src/Bayes/IOConditionalProbability.java</file>
+            <file>file:/C:/Users/Long/Documents/NetBeansProjects/PERTBayesianNetWork/src/Bayes/test.java</file>
+            <file>file:/C:/Users/Long/Documents/NetBeansProjects/PERTBayesianNetWork/src/Bayes/RisksNet.java</file>
+            <file>file:/C:/Users/Long/Documents/NetBeansProjects/PERTBayesianNetWork/src/Bayes/RiskBayesNet.java</file>
+            <file>file:/C:/Users/Long/Documents/NetBeansProjects/PERTBayesianNetWork/src/Bayes/BayesNet.java</file>
+            <file>file:/C:/Users/Long/Documents/NetBeansProjects/PERTBayesianNetWork/src/GUI/PanelTask.java</file>
         </group>
     </open-files>
 </project-private>

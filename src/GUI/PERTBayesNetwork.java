@@ -8,20 +8,31 @@ package GUI;
 import Bayes.CriticalPath;
 import Bayes.InitTotalDuration;
 import Bayes.Task;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.stage.FileChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 
 /**
  *
- * @author Truong
+ * @author Long
  */
 public class PERTBayesNetwork extends javax.swing.JFrame {
-
+    
+    public static String    FILE_DIRECTORY = "D:/dulieuthat";
+    String projectFilePath;
     /**
      * Creates new form BayesNetwork
      */
@@ -43,12 +54,12 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,127 +68,7 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Task Name", "Optimistic", "MostLikely", "Pessimistic", "Duration", "Successor"
-            }
-        ));
-        jTable1.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                jTable1InputMethodTextChanged(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-        }
-
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("List Task");
 
         jButton2.setText("Kết quả PERTBN");
@@ -199,56 +90,70 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(176, 176, 176)
+                .addGap(65, 65, 65)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(71, 71, 71))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton2, jButton4});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(42, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton2, jButton4});
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("select");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel2)
-                        .addGap(0, 608, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(jTextField1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64))
+                .addGap(70, 70, 70))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -256,9 +161,12 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(216, 216, 216)
-                .addComponent(jLabel1))
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel1)))
+                .addGap(153, 153, 153))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,181 +175,165 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-            ArrayList<Task> luuTask = new ArrayList<Task>();
-            for (int i = 0; i < 100; i++) {
-                if (jTable1.getValueAt(i, 0) != null && !((String) jTable1.getValueAt(i, 0)).trim().equals("")) {
-                    if ((jTable1.getValueAt(i, 1)) != null && !((String) jTable1.getValueAt(i, 1)).trim().equals("")) {
-                        
-                        String optimistic = (String) jTable1.getModel().getValueAt(i, 1);
-                        String mostlikely = (String) jTable1.getModel().getValueAt(i, 2);
-                        String pessimistic = (String) jTable1.getModel().getValueAt(i,3);
-                        String duration = (String) jTable1.getModel().getValueAt(i, 4); 
-                        System.out.println(optimistic);
-                        System.out.println(mostlikely);
-                        System.out.println(pessimistic);
-                        System.out.println(duration);
+          if(projectFilePath != null){
+              ArrayList<Task> luuTask= new ArrayList<Task>();
+              try {
+                  System.out.println(projectFilePath);
+                  Workbook workbook; 
+                  workbook  = Workbook.getWorkbook(new File(projectFilePath));
+                  // get sheet want read
+                  Sheet sheet = workbook.getSheet(0);
+                  // get number row and col contain data
+                  int rows = sheet.getRows();
+                  System.out.println(sheet.getRows());
+                  System.out.println("Reading data in file.......");
+			// read data in each cell
+                    for (int row = 1; row < rows; row++) {
+                        String riskFile = "D:/risk/probability" + rand(1, 7) + ".bin";
+			String name = sheet.getCell(1, row).getContents();
+			int optimistic = Integer.parseInt(sheet.getCell(2, row).getContents());
+                        int mostlikely = Integer.parseInt(sheet.getCell(3, row).getContents());
+                        int pessimistic = Integer.parseInt(sheet.getCell(4, row).getContents());
                         InitTotalDuration DA = new InitTotalDuration();
-                        DA.innitTotalDuration(Double.valueOf(optimistic),Double.valueOf(mostlikely),Double.valueOf(pessimistic), Double.valueOf(duration));
-                        Task task = new Task("Task "+i+":" +((String) jTable1.getValueAt(i, 0)).trim(), DA.getDuration());
+                        DA.innitTotalDuration(Double.valueOf(optimistic),Double.valueOf(mostlikely),Double.valueOf(pessimistic),riskFile);
+                        Task task = new Task(name, riskFile, DA.getDuration(), DA.getTotalDuration());
                         luuTask.add(task);
-                    } else if (jTable1.getValueAt(i, 1) == null) {
-                        InitTotalDuration DA = new InitTotalDuration();
-                        DA.innitTotalDuration(0,0, 0, 0);
-                        Task task = new Task((String) jTable1.getValueAt(i, 0), DA.getDuration());
-                        luuTask.add(i, task);
                     }
-
-                }
-            }
-            for (int i = 0; i < 100; i++) {
-                if (jTable1.getValueAt(i, 0) != null && !((String) jTable1.getValueAt(i, 0)).trim().equals("")) {
-                    String str = (String) jTable1.getValueAt(i, 5);
-
-                    if (str != null) {
-                        String[] arr = str.trim().split(",");
-                        for (int j = 0; j < arr.length; j++) {
-                            for (int k = 0; k < luuTask.size(); k++) {
-                                if (luuTask.get(k).name.equals("Task "+k+":"+arr[j].trim())) {
-                                    luuTask.get(i).getDependencies().add(luuTask.get(k));
-                                }
+                    for(int row = 1; row < rows ; row++){
+                        String predecessor = sheet.getCell(5,row).getContents();
+                        for(int i=0;i<luuTask.size();i++){
+                            if(predecessor.contains(luuTask.get(i).name)){
+                                luuTask.get(i).getDependencies().add(luuTask.get(row-1));
                             }
                         }
                     }
+                    
+                HashSet<Task> allTasks = new HashSet<Task>();
+                for (int i = 0; i < luuTask.size(); i++) {
+                    allTasks.add(luuTask.get(i));
                 }
-            }
-            HashSet<Task> allTasks = new HashSet<Task>();
-            for (int i = 0; i < luuTask.size(); i++) {
-                allTasks.add(luuTask.get(i));
-            }
-            CriticalPath cri = new CriticalPath(allTasks);
+                CriticalPath cri = new CriticalPath(allTasks);
 
-            cri.run((HashSet<Task>) cri.tasks);
-            ArrayList<Task> timTaskCuoi1 = cri.timTaskCuoi((HashSet<Task>) cri.tasks);
-            
-            JFrame fame = new JFrame();
-            Result1 re = new Result1(timTaskCuoi1);
-            fame.add(re);
-            fame.setVisible(true);
-            fame.setSize(1500, 1000);
-        } catch (NumberFormatException | ArithmeticException ex) {
-            JOptionPane.showConfirmDialog(this, "Kiểm tra dữ liệu vào", "Thông báo", -1);
-        }
+                cri.run();
+                ArrayList<Task> timTaskCuoi1 = cri.timTaskCuoi((HashSet<Task>) cri.tasks);
+
+                JFrame fame = new JFrame();
+                Result1 re = new Result1(timTaskCuoi1);
+                fame.add(re);
+                fame.setVisible(true);
+                fame.setSize(1500, 1000);
+		// close
+                workbook.close();
+              } catch (IOException ex) {
+                  Logger.getLogger(PERTBayesNetwork.class.getName()).log(Level.SEVERE, null, ex);
+              } catch (BiffException ex) {
+                  Logger.getLogger(PERTBayesNetwork.class.getName()).log(Level.SEVERE, null, ex);
+              }
+             
+          }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTable1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTable1InputMethodTextChanged
-        
-    }//GEN-LAST:event_jTable1InputMethodTextChanged
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        ArrayList<Task> luuTask = new ArrayList<Task>();
-        try {
-            for (int i = 0; i < 100; i++) {
-                 if (jTable1.getValueAt(i, 0) != null && !((String) jTable1.getValueAt(i, 0)).trim().equals("")) {
-                    if ((jTable1.getValueAt(i, 1)) != null && !((String) jTable1.getValueAt(i, 1)).trim().equals("")) {
-                        String optimistic = (String) jTable1.getModel().getValueAt(i, 1);
-                        String mostlikely = (String) jTable1.getModel().getValueAt(i,2);
-                        String pessimistic = (String) jTable1.getModel().getValueAt(i,3);
-                        String duration = (String) jTable1.getModel().getValueAt(i,4);
+                  if(projectFilePath != null){
+              ArrayList<Task> luuTask= new ArrayList<Task>();
+              try {
+                  System.out.println(projectFilePath);
+                  Workbook workbook; 
+                  workbook  = Workbook.getWorkbook(new File(projectFilePath));
+                  // get sheet want read
+                  Sheet sheet = workbook.getSheet(0);
+                  // get number row and col contain data
+                  int rows = sheet.getRows();
+                  System.out.println(sheet.getRows());
+                  System.out.println("Reading data in file.......");
+                  // read data in each cell
+                    for (int row = 1; row < rows; row++) {
+                        String riskFile = "D:/risk/probability" + rand(1, 7) + ".bin";
+			String name = sheet.getCell(1, row).getContents();
+			int optimistic = Integer.parseInt(sheet.getCell(2, row).getContents());
+                        int mostlikely = Integer.parseInt(sheet.getCell(3, row).getContents());
+                        int pessimistic = Integer.parseInt(sheet.getCell(4, row).getContents());
                         InitTotalDuration DA = new InitTotalDuration();
-                        DA.innitTotalDuration(Double.valueOf(optimistic),Double.valueOf(mostlikely),Double.valueOf(pessimistic), Double.valueOf(duration));
-                        Task task = new Task(("Task "+i+":" +(String) jTable1.getValueAt(i, 0)).trim(), DA.getDuration());
+                        DA.innitTotalDuration(Double.valueOf(optimistic),Double.valueOf(mostlikely),Double.valueOf(pessimistic),riskFile);
+                        Task task = new Task(name, riskFile,DA.getDuration(), DA.getTotalDuration());
                         luuTask.add(task);
-                        
-                    } else if (jTable1.getValueAt(i, 1) == null) {
-                        InitTotalDuration DA = new InitTotalDuration();
-                        DA.innitTotalDuration(0.5, .5, 0.5, 0.5);
-                        Task task = new Task((String) jTable1.getValueAt(i, 0), DA.getDuration());
-                        luuTask.add(i, task);
                     }
-
-                }
-            }
-            for (int i = 0; i < 100; i++) {
-                if (jTable1.getValueAt(i, 0) != null && !((String) jTable1.getValueAt(i, 0)).trim().equals("")) {
-                    String str = (String) jTable1.getValueAt(i, 5);
-
-                    if (str != null) {
-                        String[] arr = str.trim().split(",");
-                        for (int j = 0; j < arr.length; j++) {
-                            //System.out.println("svvvvvvvv :"+("Task"+i +arr[j]).trim());
-                            for (int k = 0; k < luuTask.size(); k++) {
-                                if (luuTask.get(k).name.equals("Task "+k+":" +arr[j].trim())) {
-                                    
-                                    luuTask.get(i).getDependencies().add(luuTask.get(k));
-                                }
+                    for(int row = 1; row < rows ; row++){
+                        String predecessor = sheet.getCell(5,row).getContents();
+                        for(int i=0;i<luuTask.size();i++){
+                            if(predecessor.contains(luuTask.get(i).name)){
+                                luuTask.get(i).getDependencies().add(luuTask.get(row-1));
                             }
                         }
                     }
+                    
+                HashSet<Task> allTasks = new HashSet<Task>();
+                for (int i = 0; i < luuTask.size(); i++) {
+                    allTasks.add(luuTask.get(i));
                 }
-            }
-            HashSet<Task> allTasks = new HashSet<Task>();
-            for (int i = 0; i < luuTask.size(); i++) {
-                allTasks.add(luuTask.get(i));
-            }
-            CriticalPath cri = new CriticalPath(allTasks);
+                CriticalPath cri = new CriticalPath(allTasks);
 
-            cri.run((HashSet<Task>) cri.tasks);
-            Task[] mangTask1 = cri.tasks.toArray(new Task[0]);
-            ArrayList<Task> listTask1 = new ArrayList<>();
-            for (int i = 0; i < mangTask1.length; i++) {
-                listTask1.add(mangTask1[i]);
+                cri.run();
+                Task[] mangTask1 = cri.tasks.toArray(new Task[0]);
+                ArrayList<Task> listTask1 = new ArrayList<>();
+                for (int i = 0; i < mangTask1.length; i++) {
+                    listTask1.add(mangTask1[i]);
 
-            }
-            JFrame fame = new JFrame();
-            PanelTask panelTask = new PanelTask(listTask1);
+                }
+                JFrame fame = new JFrame();
+                PanelTask panelTask = new PanelTask(listTask1);
 
-            fame.setSize(2000, 2000);
-            fame.add(panelTask);
-            fame.setVisible(true);
-        } catch (NumberFormatException | ArithmeticException ex) {
-           JOptionPane.showConfirmDialog(this, "Kiểm tra dữ liệu vào", "Thông báo", -1);
-        }
+                fame.setSize(2000, 2000);
+                fame.add(panelTask);
+                fame.setVisible(true);
+		// close
+                workbook.close();
+              } catch (IOException ex) {
+                  Logger.getLogger(PERTBayesNetwork.class.getName()).log(Level.SEVERE, null, ex);
+              } catch (BiffException ex) {
+                  Logger.getLogger(PERTBayesNetwork.class.getName()).log(Level.SEVERE, null, ex);
+              }
+             
+          }
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(FILE_DIRECTORY));
+        fileChooser.showOpenDialog(null);
+        File selectedFile = fileChooser.getSelectedFile();
+        String filePath = selectedFile.getAbsolutePath();
+        jTextField1.setText(filePath);
+        projectFilePath = filePath;
+    }//GEN-LAST:event_jButton1ActionPerformed
+    private int rand(int min, int max) {
+        try {
+            Random rn = new Random();
+            int range = max - min + 1;
+            int randomNum = min + rn.nextInt(range);
+            return randomNum;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PERTBayesNetwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PERTBayesNetwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PERTBayesNetwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PERTBayesNetwork.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PERTBayesNetwork().setVisible(true);
@@ -450,13 +342,13 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

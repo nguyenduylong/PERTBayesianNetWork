@@ -7,7 +7,7 @@ package Bayes;
 
 /**
  *
- * @author Truong
+ * @author Long
  */
 public class MathForDummies {
     //làm tròn số 2 số sau dấu phảy

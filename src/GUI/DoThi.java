@@ -38,7 +38,7 @@ public class DoThi extends JPanel {
         }
         XYSeriesCollection B = new XYSeriesCollection();
         B.addSeries(a2);
-        JFreeChart barChart = ChartFactory.createXYLineChart("Đồ thị thời gian và xác suất của " + tit, "Duratuon ", "Probability", B, PlotOrientation.VERTICAL, false, false, false);
+        JFreeChart barChart = ChartFactory.createXYLineChart("Đồ thị phân bố xác suất thời gian hoàn thành của " + tit, "Duratuon ", "Probability", B, PlotOrientation.VERTICAL, false, false, false);
         XYPlot plot = barChart.getXYPlot();
         XYLineAndShapeRenderer re = new XYLineAndShapeRenderer();
         re.setSeriesPaint(0, Color.RED);

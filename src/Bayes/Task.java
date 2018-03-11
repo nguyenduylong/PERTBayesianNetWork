@@ -11,17 +11,13 @@ import java.util.Vector;
 
 /**
  *
- * @author Truong
+ * @author Long
  */
 public class Task {
-    // the actual cost of the task
-
+    // the duration the task
     public Node duration;
-    public double maxCost;
-    public String name;
-    // the cost of the task along the critical path
-    public Node criticalCost;
-    // a name for the task for printing
+    //the total duration of the task
+    public Node totalDuration;
     // the earliest start
     public Node earlyStart;
     // the earliest finish
@@ -30,12 +26,21 @@ public class Task {
     public Node latestStart;
     // the latest finish
     public Node latestFinish;
-    // the tasks on which this task is dependant
+    
+    public double maxCost;
+    
+    public String name;
+    // the cost of the task along the critical path
+    public Node criticalCost;
+    //risk file name 
+    public String riskFile; 
+    // a name for the task for printing
     public HashSet<Task> dependencies = new HashSet<Task>();
     public HashSet<Task> parents = new HashSet<>();
 
-    public Task(String name, Node duration, Task... dependencies) {
+    public Task(String name,String riskFile, Node duration, Node totalDuration, Task... dependencies) {
         this.name = name;
+        this.riskFile = riskFile;
         criticalCost = new Node(name + ".BP");
         earlyFinish = new Node(name + ".EF");
         earlyStart = new Node(name + ".ES");
@@ -43,6 +48,7 @@ public class Task {
         latestFinish = new Node(name + ".LF");
 
         this.duration = duration;
+        this.totalDuration = totalDuration;
         this.maxCost = maxCost;
         for (Task t : dependencies) {
             this.dependencies.add(t);
@@ -84,7 +90,7 @@ public class Task {
         for (int i = 0; i < 5; i++) {
             double t = criticalCost.getValue()[i];
             latestStart.getValue()[i] = maxCost[i] - t;
-            latestFinish.getValue()[i] = Math.ceil(latestStart.getValue()[i] + duration.getValue()[i]);
+            latestFinish.getValue()[i] = (latestStart.getValue()[i] + duration.getValue()[i]);
             
         }
     }

@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Truong
+ * @author Long
  */
 public class Result1 extends JPanel {
 

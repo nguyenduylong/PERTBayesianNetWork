@@ -10,7 +10,7 @@ import java.util.Set;
 
 /**
  *
- * @author Truong
+ * @author Long
  */
 public class BayesInActivity {
 
@@ -18,17 +18,18 @@ public class BayesInActivity {
         //khoi tao cac node cha me 
         ArrayList<Node> parentsEF = new ArrayList<Node>();
         parentsEF.add(task.earlyStart);
-        parentsEF.add(task.duration);
+        parentsEF.add(task.totalDuration);
         task.earlyFinish.setParents(parentsEF);
         ArrayList<Node> parentsLS = new ArrayList<Node>();
         parentsLS.add(task.latestFinish);
-        parentsLS.add(task.duration);
+        parentsLS.add(task.totalDuration);
         task.latestStart.setParents(parentsLS);       
         task.earlyStart.setParents(findParentsES(task));       
         task.latestFinish.setParents(findParentsLF(task));
 
     }
 
+    //add node con 
     public void initDependencies(Task task) {
         for (int i = 0; i < task.earlyStart.parents.size(); i++) {
             if (task.earlyStart.parents.get(i) != null) {
@@ -56,21 +57,16 @@ public class BayesInActivity {
             }
         }
     }
-
+    
+    //add node parent 
     public ArrayList<Node> findParentsES(Task task) {
-        // System.out.println("?là sao");
         ArrayList<Node> list = new ArrayList<>();
       
         if (task.parents.size() != 0) {
             Task[] ret = task.parents.toArray(new Task[0]);
-            double value = ret[0].earlyFinish.getValue()[0];
            
             //System.out.println("value -" + value);
             for (int i = 0; i < ret.length; i++) {
-                if (ret[i].earlyFinish.getValue()[0] > value) {
-                    value = ret[i].earlyFinish.getValue()[0];
-                    
-                }
                 list.add(ret[i].earlyFinish);
             }
             
@@ -82,29 +78,24 @@ public class BayesInActivity {
         ArrayList<Node> list = new ArrayList<>();
         if (task.dependencies.size() != 0) {
             Task[] ret = task.dependencies.toArray(new Task[0]);
-            double value = ret[0].latestStart.getValue()[0];
            
             for (int i = 0; i < ret.length; i++) {
-                if (ret[i].latestStart.getValue()[0] < value) {
-                    value = ret[i].latestStart.getValue()[0];
-                    
-                }
-                list.add(ret[0].earlyFinish);
+                list.add(ret[i].earlyFinish);
             }          
         }
         return list;
     }
 
-    public void initAllOfActivity(Task[] ret) {
-        for (int i = 0; i < ret.length; i++) {
-            initParents(ret[i]);
-            ret[i].earlyStart.initProbability();
-            ret[i].earlyFinish.initProbability();
-            ret[i].latestFinish.initProbability();
-            ret[i].latestFinish.initProbability();
+    public void initAllOfActivity(Task[] list) {
+        for (int i = 0; i < list.length; i++) {
+            initParents(list[i]);
+            list[i].earlyStart.initProbability();
+            list[i].earlyFinish.initProbability();
+            list[i].latestFinish.initProbability();
+            list[i].latestFinish.initProbability();
         }
-        for (int i = 0; i < ret.length; i++) {
-            initDependencies(ret[i]);
+        for (int i = 0; i < list.length; i++) {
+            initDependencies(list[i]);
         }
 
     }

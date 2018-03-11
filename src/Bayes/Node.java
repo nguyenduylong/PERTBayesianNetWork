@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Truong
+ * @author Long
  */
 public class Node {
 
@@ -65,7 +65,7 @@ public class Node {
                 FieldProbability p2 = new FieldProbability(0, name + "2");
                 Listprobability1[0] = p1;
                 Listprobability1[1] = p2;
-              probability.add(Listprobability1);
+                probability.add(Listprobability1);
             }
             
         }
