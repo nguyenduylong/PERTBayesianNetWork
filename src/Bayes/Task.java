@@ -27,7 +27,6 @@ public class Task {
     // the latest finish
     public Node latestFinish;
     
-    public double maxCost;
     
     public String name;
     // the cost of the task along the critical path
@@ -35,7 +34,7 @@ public class Task {
     //risk file name 
     public String riskFile; 
     // a name for the task for printing
-    public HashSet<Task> dependencies = new HashSet<Task>();
+    public HashSet<Task> childs = new HashSet<Task>();
     public HashSet<Task> parents = new HashSet<>();
 
     public Task(String name,String riskFile, Node duration, Node totalDuration, Task... dependencies) {
@@ -49,16 +48,15 @@ public class Task {
 
         this.duration = duration;
         this.totalDuration = totalDuration;
-        this.maxCost = maxCost;
         for (Task t : dependencies) {
-            this.dependencies.add(t);
+            this.childs.add(t);
         }
       
         for (int i = 0; i < 5; i++) {
             this.earlyFinish.getValue()[i] = -1;
         }
     }
-    public Task(String name, Task... dependencies) {
+    public Task(String name, Task... childs) {
         this.name = name;
         criticalCost = new Node(name + ".BP");
         earlyFinish = new Node(name + ".EF");
@@ -67,9 +65,8 @@ public class Task {
         latestFinish = new Node(name + ".LF");
 
         this.duration = duration;
-        this.maxCost = maxCost;
-        for (Task t : dependencies) {
-            this.dependencies.add(t);
+        for (Task t : childs) {
+            this.childs.add(t);
         }
       
         for (int i = 0; i < 5; i++) {
@@ -77,13 +74,6 @@ public class Task {
         }
     }
 
-    public double getMaxCost() {
-        return maxCost;
-    }
-
-    public void setMaxCost(double maxCost) {
-        this.maxCost = maxCost;
-    }
 
     public void setLatest(double[] maxCost) {
         
@@ -105,29 +95,29 @@ public class Task {
             }
             String criticalCond = soSanh == 0 ? "Yes" : "No";
             String[] toString = {name, earlyStart.getValue()[i] + "", earlyFinish.getValue()[i] + "", latestStart.getValue()[i] + "", latestFinish.getValue()[i] + "",
-                soSanh + "", criticalCond};
+                soSanh + "", criticalCond + ""};
             list.add(toString);
         }
         return list;
     }
 
-    public HashSet<Task> getDependencies() {
-        return dependencies;
+    public HashSet<Task> getChilds() {
+        return childs;
     }
 
-    public void setDependencies(HashSet<Task> dependencies) {
-        this.dependencies = dependencies;
+    public void setChilds(HashSet<Task> childs) {
+        this.childs = childs;
     }
     
 
-    public boolean isDependent(Task t) {
+    public boolean isChild(Task t) {
         // is t a direct dependency?
-        if (dependencies.contains(t)) {
+        if (childs.contains(t)) {
             return true;
         }
         // is t an indirect dependency
-        for (Task dep : dependencies) {
-            if (dep.isDependent(t)) {
+        for (Task dep : childs) {
+            if (dep.isChild(t)) {
                 return true;
             }
         }
@@ -136,7 +126,7 @@ public class Task {
     public Vector taskToVector(){
         Vector v = new Vector();
         v.add(this.name);
-         Task[] ret = getDependencies().toArray(new Task[0]);
+         Task[] ret = getChilds().toArray(new Task[0]);
          String str ="";
        for(int i =0; i < ret.length; i++){
            str +=ret[i].name+",";

@@ -5,8 +5,8 @@
  */
 package GUI;
 
-import Bayes.CriticalPath;
-import Bayes.InitTotalDuration;
+import Bayes.TimeCalculation;
+import Bayes.InitialDurationNodes;
 import Bayes.Task;
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +69,7 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("List Task");
+        jLabel2.setText("File Project");
 
         jButton2.setText("Kết quả PERTBN");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -91,14 +91,11 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4)
-                .addGap(71, 71, 71))
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
         );
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton2, jButton4});
-
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -117,7 +114,7 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("select");
+        jButton1.setText("Chọn File");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -138,9 +135,9 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,22 +157,18 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(jLabel1)))
-                .addGap(153, 153, 153))
+                .addGap(112, 112, 112)
+                .addComponent(jLabel1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -196,21 +189,21 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
                   System.out.println("Reading data in file.......");
 			// read data in each cell
                     for (int row = 1; row < rows; row++) {
-                        String riskFile = "D:/risk/probability" + rand(1, 7) + ".bin";
+                        String riskFile = "D:/distribution/probability" + rand(1, 7) + ".bin";
 			String name = sheet.getCell(1, row).getContents();
 			int optimistic = Integer.parseInt(sheet.getCell(2, row).getContents());
                         int mostlikely = Integer.parseInt(sheet.getCell(3, row).getContents());
                         int pessimistic = Integer.parseInt(sheet.getCell(4, row).getContents());
-                        InitTotalDuration DA = new InitTotalDuration();
-                        DA.innitTotalDuration(Double.valueOf(optimistic),Double.valueOf(mostlikely),Double.valueOf(pessimistic),riskFile);
-                        Task task = new Task(name, riskFile, DA.getDuration(), DA.getTotalDuration());
+                        InitialDurationNodes duration = new InitialDurationNodes();
+                        duration.innitTotalDuration(Double.valueOf(optimistic),Double.valueOf(mostlikely),Double.valueOf(pessimistic),riskFile);
+                        Task task = new Task(name, riskFile, duration.getEstimatedDuration(), duration.getTotalDuration());
                         luuTask.add(task);
                     }
                     for(int row = 1; row < rows ; row++){
                         String predecessor = sheet.getCell(5,row).getContents();
                         for(int i=0;i<luuTask.size();i++){
                             if(predecessor.contains(luuTask.get(i).name)){
-                                luuTask.get(i).getDependencies().add(luuTask.get(row-1));
+                                luuTask.get(i).getChilds().add(luuTask.get(row-1));
                             }
                         }
                     }
@@ -219,16 +212,16 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
                 for (int i = 0; i < luuTask.size(); i++) {
                     allTasks.add(luuTask.get(i));
                 }
-                CriticalPath cri = new CriticalPath(allTasks);
+                TimeCalculation tc = new TimeCalculation(allTasks);
 
-                cri.run();
-                ArrayList<Task> timTaskCuoi1 = cri.timTaskCuoi((HashSet<Task>) cri.tasks);
+                tc.run();
+                ArrayList<Task> lastTask = tc.lastTask((HashSet<Task>) tc.tasks);
 
                 JFrame fame = new JFrame();
-                Result1 re = new Result1(timTaskCuoi1);
+                Result re = new Result(lastTask);
                 fame.add(re);
                 fame.setVisible(true);
-                fame.setSize(1500, 1000);
+                fame.setSize(450,450);
 		// close
                 workbook.close();
               } catch (IOException ex) {
@@ -241,7 +234,7 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-                  if(projectFilePath != null){
+            if(projectFilePath != null){
               ArrayList<Task> luuTask= new ArrayList<Task>();
               try {
                   System.out.println(projectFilePath);
@@ -255,21 +248,21 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
                   System.out.println("Reading data in file.......");
                   // read data in each cell
                     for (int row = 1; row < rows; row++) {
-                        String riskFile = "D:/risk/probability" + rand(1, 7) + ".bin";
+                        String riskFile = "D:/distribution/probability" + rand(1, 7) + ".bin";
 			String name = sheet.getCell(1, row).getContents();
 			int optimistic = Integer.parseInt(sheet.getCell(2, row).getContents());
                         int mostlikely = Integer.parseInt(sheet.getCell(3, row).getContents());
                         int pessimistic = Integer.parseInt(sheet.getCell(4, row).getContents());
-                        InitTotalDuration DA = new InitTotalDuration();
+                        InitialDurationNodes DA = new InitialDurationNodes();
                         DA.innitTotalDuration(Double.valueOf(optimistic),Double.valueOf(mostlikely),Double.valueOf(pessimistic),riskFile);
-                        Task task = new Task(name, riskFile,DA.getDuration(), DA.getTotalDuration());
+                        Task task = new Task(name,riskFile,DA.getEstimatedDuration(), DA.getTotalDuration());
                         luuTask.add(task);
                     }
                     for(int row = 1; row < rows ; row++){
                         String predecessor = sheet.getCell(5,row).getContents();
                         for(int i=0;i<luuTask.size();i++){
                             if(predecessor.contains(luuTask.get(i).name)){
-                                luuTask.get(i).getDependencies().add(luuTask.get(row-1));
+                                luuTask.get(i).getChilds().add(luuTask.get(row-1));
                             }
                         }
                     }
@@ -278,10 +271,10 @@ public class PERTBayesNetwork extends javax.swing.JFrame {
                 for (int i = 0; i < luuTask.size(); i++) {
                     allTasks.add(luuTask.get(i));
                 }
-                CriticalPath cri = new CriticalPath(allTasks);
+                TimeCalculation tc = new TimeCalculation(allTasks);
 
-                cri.run();
-                Task[] mangTask1 = cri.tasks.toArray(new Task[0]);
+                tc.run();
+                Task[] mangTask1 = tc.tasks.toArray(new Task[0]);
                 ArrayList<Task> listTask1 = new ArrayList<>();
                 for (int i = 0; i < mangTask1.length; i++) {
                     listTask1.add(mangTask1[i]);

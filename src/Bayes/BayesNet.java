@@ -14,24 +14,23 @@ import com.bayesserver.inference.QueryOutput;
 import com.bayesserver.inference.RelevanceTreeInferenceFactory;
 
 public class BayesNet {
-	private float bayesProbability;
 	private RisksNet risknet;
 
 	public BayesNet() throws IOException, InconsistentEvidenceException {
-		for (int id = 1; id < 8; id++) {
+		for (int id = 1; id <= 7; id++) {
 			risknet = new RisksNet(Integer.toString(id));
 			InferenceFactory factory = new RelevanceTreeInferenceFactory();
 			Inference inference = factory.createInferenceEngine(risknet.getRiskNet());
 			QueryOptions queryOptions = factory.createQueryOptions();
 			QueryOutput queryOutput = factory.createQueryOutput();
-			System.out.println("D:/risk/probability" + id +".bin");
+			System.out.println("D:/distribution/probability" + id +".bin");
 			// Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
-			FileOutputStream fos = new FileOutputStream("D:/risk/probability" + id +".bin");
+			FileOutputStream fos = new FileOutputStream("D:/distribution/probability" + id +".bin");
 			DataOutputStream dos = new DataOutputStream(fos);
 
 			// Bước 2: Ghi dữ liệu
 
-			for (int i = 0; i < 20; i++) {
+			for (int i = 0; i < 23; i++) {
 				Table queryRisk = new Table(risknet.getRiskNet().getNodes().get(i));
 				State stateTrue = risknet.getRiskNet().getNodes().get(i).getVariables().get(0).getStates().get("True");
 				State stateFalse = risknet.getRiskNet().getNodes().get(i).getVariables().get(0).getStates()
@@ -49,14 +48,6 @@ public class BayesNet {
 			dos.close();
 			System.out.println("Done!");
 		}
-	}
-
-	public float getBayesProbability() {
-		return bayesProbability;
-	}
-
-	public void setBayesProbability(float bayesProbability) {
-		this.bayesProbability = bayesProbability;
 	}
 
 	public static void main(String[] args) throws IOException, InconsistentEvidenceException {

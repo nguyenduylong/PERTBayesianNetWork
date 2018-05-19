@@ -19,7 +19,6 @@ import java.util.Set;
 public class IOConditionalProbability {
 
     Task[] result;
-    Scanner input = new Scanner(System.in).useLocale(Locale.US);
 
     public IOConditionalProbability(Task[] result) {
         this.result = result;
@@ -29,28 +28,29 @@ public class IOConditionalProbability {
     }
 
     public void inputTask(Task task) {
-        ConditionalProbability con1 = new ConditionalProbability(0.9, task.name + ".EF1", "D1", task.name + ".ES1");
-        ConditionalProbability con2 = new ConditionalProbability(0.5, task.name + ".EF1", "D1", task.name + ".ES2");
-        ConditionalProbability con3 = new ConditionalProbability(0.5, task.name + ".EF1", "D2", task.name + ".ES1");
-        ConditionalProbability con4 = new ConditionalProbability(0.1, task.name + ".EF1", "D2", task.name + ".ES2");
-        ConditionalProbability con5 = new ConditionalProbability(0.1, task.name + ".EF2", "D1", task.name + ".ES1");
-        ConditionalProbability con6 = new ConditionalProbability(0.5, task.name + ".EF2", "D1", task.name + ".ES2");
-        ConditionalProbability con7 = new ConditionalProbability(0.5, task.name + ".EF2", "D2", task.name + ".ES1");
-        ConditionalProbability con8 = new ConditionalProbability(0.9, task.name + ".EF2", "D2", task.name + ".ES2");
-        task.earlyFinish.getListConditional().add(con1);
-        task.earlyFinish.getListConditional().add(con2);
-        task.earlyFinish.getListConditional().add(con3);
-        task.earlyFinish.getListConditional().add(con4);
-        task.earlyFinish.getListConditional().add(con5);
-        task.earlyFinish.getListConditional().add(con7);
-        task.earlyFinish.getListConditional().add(con6);
-        task.earlyFinish.getListConditional().add(con8);
-        // P(A.EF1/A.D1, A.ES1) = ....
+        //conditional probability for EF node
+        ConditionalProbability EFCon1 = new ConditionalProbability(1, task.name + ".EF1", "D1", task.name + ".ES1");
+        ConditionalProbability EFCon2 = new ConditionalProbability(0.7, task.name + ".EF1", "D1", task.name + ".ES2");
+        ConditionalProbability EFCon3 = new ConditionalProbability(0.3, task.name + ".EF1", "D2", task.name + ".ES1");
+        ConditionalProbability EFCon4 = new ConditionalProbability(0, task.name + ".EF1", "D2", task.name + ".ES2");
+        ConditionalProbability EFCon5 = new ConditionalProbability(0, task.name + ".EF2", "D1", task.name + ".ES1");
+        ConditionalProbability EFCon6 = new ConditionalProbability(0.3, task.name + ".EF2", "D1", task.name + ".ES2");
+        ConditionalProbability EFCon7 = new ConditionalProbability(0.7, task.name + ".EF2", "D2", task.name + ".ES1");
+        ConditionalProbability EFCon8 = new ConditionalProbability(1, task.name + ".EF2", "D2", task.name + ".ES2");
+        task.earlyFinish.getListConditional().add(EFCon1);
+        task.earlyFinish.getListConditional().add(EFCon2);
+        task.earlyFinish.getListConditional().add(EFCon3);
+        task.earlyFinish.getListConditional().add(EFCon4);
+        task.earlyFinish.getListConditional().add(EFCon5);
+        task.earlyFinish.getListConditional().add(EFCon6);
+        task.earlyFinish.getListConditional().add(EFCon7);
+        task.earlyFinish.getListConditional().add(EFCon8);
+        //conditional probability for ES node        
         if (task.earlyStart.parents.size() > 0) {
             ArrayList<String> result = new ArrayList<>();
             ArrayList<Double> luuXacSuat = new ArrayList<>();
             int n = task.earlyStart.parents.size()+1;
-            TRY("", n, result);
+            index("", n, result);
             for (int i = 0; i < result.size(); i++) {
                 System.out.println(result.get(i));
                 int[] indexs = new int[n];
@@ -67,31 +67,29 @@ public class IOConditionalProbability {
                 str += task.earlyStart.parents.get(n - 2).getName() + indexs[n - 2] + ")=";
                 System.out.println(str);
                  double giatri=0;
-                if(i ==0){
-                    giatri = 0.9;
-                    luuXacSuat.add(i, giatri);
-                } else
-                if (i % 2 == 0 && i >0) {
-                     giatri = 0.1;
-                     luuXacSuat.add(i, giatri);
-                } else if(i%2 ==1){
-                    giatri = 1-luuXacSuat.get(i-1);
-                    luuXacSuat.add(i, giatri);
-                }
-              
-               // double giatri = input.nextDouble();
+                 //khởi tạo giá trị xác suất có đkiện, ở vị trí i chẵn là những xác suất 1 : nên cần tìm số lần xuất hiện 1 ở đkiện
+                 // vị trí lẻ i%2 == 1 : xác suất 2 : tìm số lần xuất hiện 2 ở đkiện 
+                 if(i % 2 == 0)
+                 {
+                     giatri = timeappear1(indexs)/(n-1);
+                     luuXacSuat.add(i,giatri);
+                 }else{
+                     giatri = timeappear2(indexs)/(n-1);
+                     luuXacSuat.add(i,giatri);
+                 }
                 cha[n - 2] = task.earlyStart.parents.get(n - 2).getName() + indexs[n - 2];
                 ConditionalProbability pro = new ConditionalProbability(giatri, task.name + ".ES" + indexs[n - 1], cha);
+                System.out.println("conditional probability : " + pro.print());
                 task.earlyStart.getListConditional().add(pro);
             }
              
         }
     }
-
-    public void TRY(String str, int len, ArrayList<String> result) {
+    //index off nodes, 1 : nodes event occurred . 2 : nodes event not occurred
+    public void index(String str, int len, ArrayList<String> result) {
         if (str.length() < len) {
-            for (int i = 1; i < 3; i++) {
-                TRY(str + String.valueOf(i), len, result);
+            for (int i = 1; i <= 2; i++) {
+                index(str + String.valueOf(i), len, result);
             }
         } else {
             result.add(new String(str));
@@ -102,7 +100,7 @@ public class IOConditionalProbability {
         ArrayList<String> result = new ArrayList<>();
         IOConditionalProbability demo = new IOConditionalProbability();
         int n = 3;
-        demo.TRY("", n, result);
+//        demo.index("", n, result);
         System.out.println(result.size());
         for (int i = 0; i < result.size(); i++) {
             System.out.println(result.get(i));
@@ -126,6 +124,24 @@ public class IOConditionalProbability {
             inputTask(result[i]);
         }
     }
-    //
+    
+    private double timeappear1(int a[])
+    {
+        double count = 0.0;
+        for(int i= 0  ; i < a.length - 1 ; i ++)
+        {
+            if(a[i]==1) count ++;
+        }
+        return count;
+    }
+    private double timeappear2(int a[])
+    {
+        double count = 0.0;
+        for(int i= 0 ; i < a.length - 1 ; i ++)
+        {
+            if(a[i]==2) count ++;
+        }
+        return count;
+    }
 
 }

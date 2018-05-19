@@ -5,8 +5,8 @@
  */
 package GUI;
 
-import Bayes.CriticalPath;
-import Bayes.RiskBayesNet;
+import Bayes.TimeCalculation;
+import Bayes.RiskBayesNetGUI;
 import Bayes.Task;
 import java.awt.Color;
 import java.awt.Font;
@@ -40,6 +40,7 @@ public class ActivityLayout extends JPanel {
     JButton button5;
     JButton button6;
     JButton button7;
+    
     ArrayList<Task> listTask ;
 
     public ActivityLayout(String tit,ArrayList<Task> listTask) {
@@ -50,27 +51,27 @@ public class ActivityLayout extends JPanel {
         button1.setSize(50, 50);
         button1.setLocation(point1);
         button2 = new JButton("TD");
-        Point point2 = new Point(75,75);
+        Point point2 = new Point(60,60);
         button2.setLocation(point2);
         button2.setSize(50, 50);
-        button6 = new JButton("D");
-        Point point6 = new Point(75,0);
+        button6 = new JButton("ED");
+        Point point6 = new Point(60,0);
         button6.setLocation(point6);
         button6.setSize(50, 50);
         button7 = new JButton("R");
-        Point point7 = new Point(75,150);
+        Point point7 = new Point(60,120);
         button7.setLocation(point7);
         button7.setSize(50, 50);
         button3 = new JButton("LF");
-        Point point3 = new Point(0, 150);
+        Point point3 = new Point(0, 120);
         button3.setLocation(point3);
         button3.setSize(50, 50);
         button4 = new JButton("ES");
-        Point point4 = new Point(150, 0);
+        Point point4 = new Point(120, 0);
         button4.setLocation(point4);
         button4.setSize(50, 50);
         button5 = new JButton("EF");
-        Point point5 = new Point(150, 150);
+        Point point5 = new Point(120, 120);
         button5.setLocation(point5);
         button5.setSize(50, 50);
         this.setLayout(null);
@@ -89,7 +90,6 @@ public class ActivityLayout extends JPanel {
         layBel.setSize(100, 100);
         this.add(button1);
         this.setBackground(Color.GRAY);
-        System.out.println("size:"+ listTask.size());
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -126,49 +126,49 @@ public class ActivityLayout extends JPanel {
     }
         
     public void doThiDuration(){
-        CriticalPath cri = new CriticalPath();
+        TimeCalculation cri = new TimeCalculation();
         ArrayList<ArrayList<Double>> duLieu = new ArrayList<>();       
         duLieu = cri.duLieuDuration(listTask.get(0));
         JFrame fame = new JFrame();
-        DoThi doThi = new DoThi(duLieu," Duration : " + tit,0);
+        DoThi doThi = new DoThi(duLieu," Estimated Duration : " + tit);
         fame.add(doThi);
         fame.setSize(500, 500);
         fame.setVisible(true);
     }
     
     public void  dothiTotalDuration(){
-        CriticalPath cri = new CriticalPath();
+        TimeCalculation cri = new TimeCalculation();
         ArrayList<ArrayList<Double>> duLieu = new ArrayList<>();       
         duLieu = cri.duLieuTotalDuration(listTask.get(0));
         JFrame fame = new JFrame();
-        DoThi doThi = new DoThi(duLieu," Total Duration : " + tit,0);
+        DoThi doThi = new DoThi(duLieu," Total Duration : " + tit);
         fame.add(doThi);
         fame.setSize(500, 500);
         fame.setVisible(true);
     }
      public void doThiEF(){
-        CriticalPath cri = new CriticalPath();
+        TimeCalculation cri = new TimeCalculation();
         ArrayList<ArrayList<Double>> duLieu = new ArrayList<>();       
         duLieu = cri.duLieuEF(listTask.get(0));
         JFrame fame = new JFrame();
-        DoThi doThi = new DoThi(duLieu," EF : " + tit,0);
+        DoThi doThi = new DoThi(duLieu," EF : " + tit);
         fame.add(doThi);
         fame.setSize(500, 500);
         fame.setVisible(true);
     }
       public void doThiES(){
-        CriticalPath cri = new CriticalPath();
+        TimeCalculation cri = new TimeCalculation();
         ArrayList<ArrayList<Double>> duLieu = new ArrayList<>();       
         duLieu = cri.duLieuES(listTask.get(0));
         JFrame fame = new JFrame();
-        DoThi doThi = new DoThi(duLieu," ES : " + tit,0);
+        DoThi doThi = new DoThi(duLieu," ES : " + tit);
         fame.add(doThi);
         fame.setSize(500, 500);
         fame.setVisible(true);
     }
     
     public void riskNet(){
-        RiskBayesNet frame = new RiskBayesNet(listTask.get(0).name, listTask.get(0).riskFile);
+        RiskBayesNetGUI frame = new RiskBayesNetGUI(listTask.get(0).name, listTask.get(0).riskFile);
 	frame.setSize(400, 320);
 	frame.setVisible(true);
     }  
@@ -189,7 +189,7 @@ public class ActivityLayout extends JPanel {
         g.drawLine(button1.getX() + 25, button1.getY() + 50, button1.getX() + 22, button1.getY() + 55);
         g.drawLine(button1.getX() + 25, button1.getY() + 50, button1.getX() + 27, button1.getY() + 55);
 
-        g.drawLine(button2.getX(), button2.getY(), button1.getX() + 50, button1.getY() + 25);
+        g.drawLine(button2.getX(), button2.getY()+25, button1.getX() + 50, button1.getY() + 25);
         g.drawLine(button1.getX() + 50, button1.getY() + 25, button1.getX() + 55, button1.getY() + 27);
         g.drawLine(button1.getX() + 50, button1.getY() + 25, button1.getX() + 53, button1.getY() + 30);
 
@@ -197,9 +197,9 @@ public class ActivityLayout extends JPanel {
         g.drawLine(button5.getX() + 25, button5.getY(), button5.getX() + 22, button5.getY() - 5);
         g.drawLine(button5.getX() + 25, button5.getY(), button5.getX() + 27, button5.getY() - 5);
 
-        g.drawLine(button2.getX() + 50, button2.getY() + 50, button5.getX(), button5.getY() + 25);
-        g.drawLine(button5.getX(), button5.getY() + 25, button5.getX() - 1, button5.getY() + 17);
-        g.drawLine(button5.getX(), button5.getY() + 25, button5.getX() - 7, button5.getY() + 25);
+        g.drawLine(button2.getX() + 50, button2.getY() + 25, button5.getX(), button5.getY() + 25);
+        g.drawLine(button5.getX(), button5.getY() + 25, button5.getX() - 3, button5.getY() + 17);
+        g.drawLine(button5.getX(), button5.getY() + 25, button5.getX() - 3, button5.getY() + 25);
         
         g.drawLine(button6.getX() + 25, button6.getY() + 50, button2.getX()+25, button2.getY());
         g.drawLine(button2.getX()+25, button2.getY(), button2.getX() + 20, button2.getY() - 5);

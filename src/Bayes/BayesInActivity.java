@@ -33,27 +33,22 @@ public class BayesInActivity {
     public void initDependencies(Task task) {
         for (int i = 0; i < task.earlyStart.parents.size(); i++) {
             if (task.earlyStart.parents.get(i) != null) {
-
-                //System.out.println("la?" + task.earlyStart.parents.size() + "?" + task.earlyStart.parents.get(0).getName());
-                task.earlyStart.parents.get(i).addDep(task.earlyStart);
-               // System.out.println("ở đây1 : "+task.earlyStart.getName()+":"+task.earlyStart.parents.get(i).getName()+":"+task.earlyStart.parents.get(i).dependencies.size());
+                task.earlyStart.parents.get(i).addChild(task.earlyStart);
             }
         }
         for (int i = 0; i < task.earlyFinish.parents.size(); i++) {
-            //System.out.println("co vao k");
             if (task.earlyFinish.parents.get(i) != null) {
-                task.earlyFinish.parents.get(i).dependencies.add(task.earlyFinish);
-                //System.out.println("ở đây2 : "+task.earlyFinish.getName());
+                task.earlyFinish.parents.get(i).childs.add(task.earlyFinish);
             }
         }
         for (int i = 0; i < task.latestStart.parents.size(); i++) {
             if (task.latestStart.parents.get(i) != null) {
-                task.latestStart.parents.get(i).dependencies.add(task.latestStart);
+                task.latestStart.parents.get(i).childs.add(task.latestStart);
             }
         }
         for (int i = 0; i < task.latestFinish.parents.size(); i++) {
             if (task.latestFinish.parents.get(i) != null) {
-                task.latestFinish.parents.get(i).dependencies.add(task.latestFinish);
+                task.latestFinish.parents.get(i).childs.add(task.latestFinish);
             }
         }
     }
@@ -64,8 +59,6 @@ public class BayesInActivity {
       
         if (task.parents.size() != 0) {
             Task[] ret = task.parents.toArray(new Task[0]);
-           
-            //System.out.println("value -" + value);
             for (int i = 0; i < ret.length; i++) {
                 list.add(ret[i].earlyFinish);
             }
@@ -76,8 +69,8 @@ public class BayesInActivity {
 
     public ArrayList<Node> findParentsLF(Task task) {
         ArrayList<Node> list = new ArrayList<>();
-        if (task.dependencies.size() != 0) {
-            Task[] ret = task.dependencies.toArray(new Task[0]);
+        if (task.childs.size() != 0) {
+            Task[] ret = task.childs.toArray(new Task[0]);
            
             for (int i = 0; i < ret.length; i++) {
                 list.add(ret[i].earlyFinish);

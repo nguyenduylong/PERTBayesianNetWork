@@ -18,7 +18,7 @@ public class Node {
     private double[] value = new double[5];
     public ArrayList<FieldProbability[]> probability = new ArrayList<>();
     private ArrayList<ConditionalProbability> listConditional = new ArrayList<>();
-    public ArrayList<Node> dependencies = new ArrayList<Node>();
+    public ArrayList<Node> childs = new ArrayList<Node>();
     public ArrayList<Node> parents = new ArrayList<Node>();
     private ArrayList<String> field = new ArrayList<>();
     private ArrayList<Double> probabilityField = new ArrayList<>();
@@ -71,8 +71,8 @@ public class Node {
         }
     
 
-    public void addDep(Node node) {
-        this.dependencies.add(node);
+    public void addChild(Node node) {
+        this.childs.add(node);
     }
 
     public String getName() {
@@ -93,12 +93,12 @@ public class Node {
         this.name = name;
     }
 
-    public ArrayList<Node> getDependencies() {
-        return dependencies;
+    public ArrayList<Node> getChilds() {
+        return childs;
     }
 
-    public void setDependencies(ArrayList<Node> dependencies) {
-        this.dependencies = dependencies;
+    public void setChilds(ArrayList<Node> childs) {
+        this.childs = childs;
     }
 
     public ArrayList<Node> getParents() {

@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import Bayes.CriticalPath;
+import Bayes.TimeCalculation;
 import Bayes.Task;
 import com.sun.java.accessibility.util.AWTEventMonitor;
 import com.sun.java.swing.plaf.motif.MotifTextUI;
@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
@@ -40,7 +41,7 @@ public class PanelTask extends JPanel {
     Point poit1;
     Point poit2;
     JButton startBtn , finishBtn;
-    
+    JPanel start,finish;
     public PanelTask(ArrayList<Task> listTask) {
         setLayout(null);
         this.listTask = listTask;
@@ -54,7 +55,7 @@ public class PanelTask extends JPanel {
 
            // System.out.println("size là :" + a.getListTask().size());
             a.setLocation(i * 150, i*20);
-            a.setSize(200,200);
+            a.setSize(170,170);
             //System.out.println("tọa độ :" + a.getButton2().getX());
             a.addMouseMotionListener(new MouseMotionListener() {
                 @Override
@@ -75,38 +76,72 @@ public class PanelTask extends JPanel {
             this.add(list.get(i));
         }
         startBtn = new JButton("start");
-        System.out.println(this.getY() + "x" + this.getX());
-        Point point1 = new Point(0,250);
+        Point point1 = new Point(10,10);
         startBtn.setSize(100, 100);
         startBtn.setLocation(point1);
-        finishBtn = new JButton("finish");
-        Point point2 = new Point(1200,250);
-        finishBtn.setLocation(point2);
-        finishBtn.setSize(100, 100);
-     
-        this.add(startBtn);
-        this.add(finishBtn);
         startBtn.addActionListener(new ActionListener() {
              @Override
                     public void actionPerformed(ActionEvent ae) {
-                                CriticalPath cri = new CriticalPath();
+                                TimeCalculation cri = new TimeCalculation();
                                 ArrayList<ArrayList<Double>> duLieu = new ArrayList<>();       
                                 duLieu = cri.duLieuES(startTask);
                                 JFrame fame = new JFrame();
-                                DoThi doThi = new DoThi(duLieu," start" ,0);
+                                DoThi doThi = new DoThi(duLieu," start");
                                 fame.add(doThi);
                                 fame.setSize(500, 500);
                                 fame.setVisible(true);
                     }
         });
+        start = new JPanel();
+        start.setLocation(0,250);
+        start.setBackground(Color.GRAY);
+        start.setLayout(null);
+        start.add(startBtn);
+        start.setSize(120,120);
+        finishBtn = new JButton("finish");
+        Point point3 = new Point(10,10);
+        finishBtn.setLocation(point3);
+        finishBtn.setSize(100, 100);
         finishBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             JFrame fame = new JFrame();
-            Result1 re = new Result1(finishTask);
+            Result re = new Result(finishTask);
             fame.add(re);
             fame.setVisible(true);
             fame.setSize(1500, 1000);
+            }
+        });
+        finish = new JPanel();
+        finish.setLocation(1250,250);
+        finish.setBackground(Color.GRAY);
+        finish.setLayout(null);
+        finish.add(finishBtn);
+        finish.setSize(120,120);
+        this.add(start);
+        this.add(finish);
+       
+        start.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent me) {
+               start.setLocation(start.getX() + me.getX(), start.getY() + me.getY());
+               repaint();
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent me) {      
+            }
+        });
+       
+        finish.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent me) {
+               finish.setLocation(finish.getX() + me.getX(), finish.getY() + me.getY());
+               repaint();
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent me) {
             }
         });
 
@@ -151,15 +186,15 @@ public class PanelTask extends JPanel {
         for(int i=0;i<listTask.size();i++){
             Task task = listTask.get(i);
             if(task.parents.isEmpty()){
-                    g.drawLine(startBtn.getX()+50, startBtn.getY() + 50, list.get(i).getX(), list.get(i).getY()+100);
-                    g.drawLine(list.get(i).getX(), list.get(i).getY()+100, list.get(i).getX()-5, list.get(i).getY()+95);
-                    g.drawLine(list.get(i).getX(), list.get(i).getY()+100, list.get(i).getX()-5, list.get(i).getY()+105);
+                    g.drawLine(start.getX()+50, start.getY() + 50, list.get(i).getX(), list.get(i).getY()+85);
+                    g.drawLine(list.get(i).getX(), list.get(i).getY()+85, list.get(i).getX()-5, list.get(i).getY()+80);
+                    g.drawLine(list.get(i).getX(), list.get(i).getY()+85, list.get(i).getX()-5, list.get(i).getY()+90);
                     startTask = task;
             }
-            if(task.getDependencies().size() == 0){
-                    g.drawLine(list.get(i).getX() + 200, list.get(i).getY()+100, finishBtn.getX(), finishBtn.getY()+50);
-                    g.drawLine(finishBtn.getX(), finishBtn.getY()+50, finishBtn.getX()-3, finishBtn.getY()+45);
-                    g.drawLine(finishBtn.getX(), finishBtn.getY()+50, finishBtn.getX()-3, finishBtn.getY()+55);
+            if(task.getChilds().size() == 0){
+                    g.drawLine(list.get(i).getX() + 170, list.get(i).getY()+85, finish.getX(), finish.getY()+50);
+                    g.drawLine(finish.getX(), finish.getY()+50, finish.getX()-3, finish.getY()+45);
+                    g.drawLine(finish.getX(), finish.getY()+50, finish.getX()-3, finish.getY()+55);
                     if(!finishTask.contains(task)){
                         finishTask.add(task);
                     }
@@ -167,9 +202,9 @@ public class PanelTask extends JPanel {
             }
         }
         for (int i = 0; i < listTask.size(); i++) {
-            if (listTask.get(i).getDependencies().size() != 0) {
+            if (listTask.get(i).getChilds().size() != 0) {
                 // System.out.println("?/");
-                Task[] li = listTask.get(i).getDependencies().toArray(new Task[0]);
+                Task[] li = listTask.get(i).getChilds().toArray(new Task[0]);
                 // System.out.println("?/"+li[0].name);
                 // System.out.println("day la :"+list.get(0).tit);
                 for (int j = 0; j < li.length; j++) {
@@ -177,9 +212,9 @@ public class PanelTask extends JPanel {
                         if (li[j].name.equals(list.get(k).tit)) {
                             //  System.out.println("vao?");
 
-                            g.drawLine(list.get(i).getX() + 100, list.get(i).getY() + 100, list.get(k).getX(), list.get(k).getY()+100);
-                            g.drawLine(list.get(k).getX(), list.get(k).getY()+100, list.get(k).getX()-5, list.get(k).getY()+105);
-                            g.drawLine(list.get(k).getX(), list.get(k).getY()+100, list.get(k).getX()-5, list.get(k).getY()+95);
+                            g.drawLine(list.get(i).getX() + 170, list.get(i).getY() + 85, list.get(k).getX(), list.get(k).getY()+85);
+                            g.drawLine(list.get(k).getX(), list.get(k).getY()+ 85, list.get(k).getX()-5, list.get(k).getY()+90);
+                            g.drawLine(list.get(k).getX(), list.get(k).getY()+85, list.get(k).getX()-5, list.get(k).getY()+80);
                         }
                     }
                 }

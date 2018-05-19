@@ -31,7 +31,6 @@ public class BayesCalculation {
                 if (node.parents.size() == 0) {
                     node.getProbability().get(chay)[0].setValue(1);
                     node.getProbability().get(chay)[1].setValue(0);
-                    //System.out.println(" nhan lĂ  :"+node.getName());
                 }else {
                     for (int i = 0; i < 2; i++) {
                         double value = 0;
@@ -40,10 +39,8 @@ public class BayesCalculation {
                             if (probability.getFieldName().equals(node.getListConditional().get(j).getFieldName())) {
                                 ConditionalProbability con = node.getListConditional().get(j);
                                 double value1 = con.getValue();
-                                //System.out.println(node.getListConditional().get(j).print() )
                                 for (int k = 0; k < con.getParentsField().size(); k++) {
                                     for (int h = 0; h < node.parents.size(); h++) {
-                                        // System.out.println("sao lại vậy : "+ h+" :" +node.parents.get(h).getProbability().size());
                                         for (int l = 0; l < 2; l++) {
 
                                             if (con.getParentsField().get(k).equals(node.parents.get(h).getProbability().get(chay)[l].getFieldName())) {
@@ -69,6 +66,7 @@ public class BayesCalculation {
 
     public void calculateTask() {
         for (int i = 0; i < result.length; i++) {
+     
             calculateBayes(result[i].earlyStart);
             calculateBayes(result[i].earlyFinish);
 
